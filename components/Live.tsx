@@ -49,7 +49,7 @@ const Live = ({ canvasRef, undo, redo }: Props) => {
                 },
             });
         }
-    }, []);
+    }, [cursor, cursorState.mode, updateMyPresence]);
 
     // Hide the cursor when the mouse leaves the canvas
     const handlePointerLeave = useCallback(() => {
@@ -60,7 +60,7 @@ const Live = ({ canvasRef, undo, redo }: Props) => {
             cursor: null,
             message: null,
         });
-    }, [])
+    }, [updateMyPresence])
 
     // Show the cursor when the mouse enters the canvas
     const handlePointerDown = useCallback(
@@ -81,7 +81,7 @@ const Live = ({ canvasRef, undo, redo }: Props) => {
                 cursorState.mode === CursorMode.Reaction ? { ...state, isPressed: true } : state
             );
         },
-        [cursorState.mode, setCursorState]
+        [cursorState.mode, setCursorState, updateMyPresence]
     );
 
     const handlePointerUp = useCallback((event: React.PointerEvent) => {
@@ -131,7 +131,7 @@ const Live = ({ canvasRef, undo, redo }: Props) => {
 
     const setReaction = useCallback((reaction: string) => {
         setCursorState({ mode: CursorMode.Reaction, reaction, isPressed: false });
-    }, [cursorState.mode, setCursorState]);
+    }, [setCursorState]);
 
     useInterval(() => {
         if (cursorState.mode === CursorMode.Reaction && cursorState.isPressed && cursor) {
@@ -193,7 +193,7 @@ const Live = ({ canvasRef, undo, redo }: Props) => {
                     break;
             }
         },
-        [],
+        [redo, undo],
     )
 
 

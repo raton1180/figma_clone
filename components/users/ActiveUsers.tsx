@@ -33,7 +33,7 @@ const ActiveUSers = () => {
         )}
       </div>
     );
-  }, [others.length]);
+  }, [others, currentUser]);
 
   return memorizedUsers
 }
